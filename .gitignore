@@ -108,5 +108,6 @@ test/fixtures/videos/
 conda-dist/
 
 # Videos
-DS_video
+videos
 dataset
+*.zip

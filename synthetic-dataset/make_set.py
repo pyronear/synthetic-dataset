@@ -5,9 +5,6 @@ import numpy as np
 import os
 import random
 
-smoke_video_file = 'DS_video/smoke/steam blow effects from bottom 05.mp4'
-background_file = 'DS_video/no_fire_background/216_seq0_861.mp4'
-
 
 def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3, 
                  fy=0.2, opacity=0.8, smoke_speed=5, smoke_offset=20):

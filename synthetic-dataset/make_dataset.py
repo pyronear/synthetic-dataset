@@ -5,8 +5,8 @@ import random
 
 def main(args):
 
-    smoke_videos = glob.glob('DS_video/smoke/*')
-    background_videos = glob.glob('DS_video/background/*')
+    smoke_videos = glob.glob('videos/smoke/*')
+    background_videos = glob.glob('videos/background/*')
 
     if args.set > 0:
         # Make n set
