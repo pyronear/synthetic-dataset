@@ -9,8 +9,8 @@ smoke_video_file = 'DS_video/smoke/steam blow effects from bottom 05.mp4'
 background_file = 'DS_video/no_fire_background/216_seq0_861.mp4'
 
 
-def make_one_set(smoke_video_file, background_file, set_idx, fx = 0.3, 
-                 fy = 0.2, opacity = 0.8, smoke_speed = 5, smoke_offset = 20):
+def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3, 
+                 fy=0.2, opacity=0.8, smoke_speed=5, smoke_offset=20):
 
     # Get smokes frames
     smoke_imgs = read_video(smoke_video_file)
@@ -22,7 +22,7 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx = 0.3,
     for smoke_img in smoke_imgs:
         smoke_mask[smoke_img > 50] = 255
         
-    y, x = np.where(smoke_mask[:, :, 0]==255)
+    y, x = np.where(smoke_mask[:, :, 0] == 255)
     x0 = min(x)
     x1 = max(x)
     y0 = min(y)
