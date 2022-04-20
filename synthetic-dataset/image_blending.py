@@ -30,7 +30,7 @@ def basic_blending(img, smoke, offset=(0, 0), opacity=0.8):
     return img, mask
 
 
-def seamless_clone_bleding(img, smoke, offset=(0,0), clone_type = cv2.MIXED_CLONE):
+def seamless_clone_blending(img, smoke, offset=(0,0), clone_type = cv2.MIXED_CLONE):
     """Add smoke on image using OpenCV with SeamlessClone method
     
     Args:
