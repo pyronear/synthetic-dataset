@@ -8,6 +8,9 @@ def main(args):
     smoke_videos = glob.glob('videos/smoke/*')
     background_videos = glob.glob('videos/background/*')
 
+    if not smoke_videos or not background_videos:
+        raise Exception("Smoke or background videos are missing to create the dataset.")
+
     if args.set > 0:
         # Make n set
         set_idx = 0
