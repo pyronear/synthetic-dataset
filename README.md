@@ -5,12 +5,12 @@ This is a temporary dataset to organize research on the change-detection project
 ## Requirements
 
 
-You first need to install Python dependecies : 
+You first need to install Python dependencies : 
 ```shell
 pip install -r requirements.txt
 ```
 
-Finally you need to add videos of background and smoke in the root folder within :
+Finally you need to add videos of background and smoke in dedicated folders :
 - `videos\background`
 - `videos\smoke`
 
