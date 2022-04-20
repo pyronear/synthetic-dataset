@@ -1,6 +1,6 @@
 import cv2
 from utils import read_video
-from image_blending import basic_blending
+from image_blending import basic_blending, poisson_blending
 import numpy as np
 import os
 import random
@@ -46,7 +46,8 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
         dx = random.randint(0, wbg - ws - 1)
 
         for i, (img, smoke) in enumerate(zip(imgs, smoke_imgs)):
-            result, mask = basic_blending(img, smoke, offset=(dy, dx))
+            # result, mask = basic_blending(img, smoke, offset=(dy, dx))
+            result, mask = poisson_blending(img, smoke, offset=(dy, dx))
             
             cv2.imwrite('dataset/img/' + name + str(i).zfill(4) + '.png', result)
             cv2.imwrite('dataset/mask/' + name + str(i).zfill(4) + '.jpg', mask*255)
