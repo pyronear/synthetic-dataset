@@ -1,6 +1,6 @@
 import cv2
 from utils import read_video
-from image_blending import basic_blending
+from image_blending import basic_blending, seamless_clone_bleding
 import numpy as np
 import os
 import random
