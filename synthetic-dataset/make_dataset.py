@@ -9,7 +9,7 @@ def main(args):
     background_videos = glob.glob('videos/background/*')
 
     if not smoke_videos or not background_videos:
-        raise Exception("Smoke or background videos are missing to create the dataset.")
+        raise Exception("Smoke or background videos are missing to create the dataset. Please read the documentation.")
 
     if args.set > 0:
         # Make n set
