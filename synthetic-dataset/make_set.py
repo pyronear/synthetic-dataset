@@ -8,9 +8,6 @@ from functools import partial
 
 BLENDING_METHODS = {
     'basic_blending' : basic_blending,
-    'seamless_clone_mixed' : partial(seamless_clone_blending, clone_type=cv2.MIXED_CLONE),
-    'seamless_clone_normal' : partial(seamless_clone_blending, clone_type=cv2.MIXED_CLONE),
-    'seamless_clone_monochrome' : partial(seamless_clone_blending, clone_type=cv2.MONOCHROME_TRANSFER)
 }
 
 DATASET_BASE_PATH = 'dataset'
