@@ -12,7 +12,6 @@ def generate_mask_from_boundary(src_image, boundary):
         
     Returns:
         np.array result mask
-    
     '''
     
     img_height = src_image.shape[0]
@@ -44,8 +43,7 @@ def convert_image_to_gradient(src_image):
     Sobel operator is an aproximation of the gradient of an image.
     For more information on Sobel operators : [[https://docs.opencv.org/3.4/d2/d2c/tutorial_sobel_derivatives.html]]
     
-    It ensures first the image is gray
-    
+    The method first ensures the image is gray
     
     Args :
         src_image (np.array) : source image
@@ -64,15 +62,14 @@ def convert_image_to_gradient(src_image):
 def compute_energy_fuction(boundary_tmp, src_image):
     '''
     Define an energy function to be optimized.
-    This method takes a 1D boundary array and a source image to compute  its energy function.
-    The latter will be optimized during the process
+    This method takes a 1D boundary array and a source image to compute its energy function output.
     
     Args :
         boundary_tmp (np.array) : 1D boundary
         src_image (np.array): Source Image
         
     Returns :
-        float Energy Function
+        float Energy function output
     '''
     
     current_sky_mask = generate_mask_from_boundary(src_image, boundary_tmp)
@@ -140,7 +137,7 @@ def compute_boundary(gradient_image, threshold):
 
 def compute_optimal_boundary(src_image, min_gradient_threshold=5, max_gradient_threshold=600, step=5):
     '''
-    Iterative process to compute a boundary and optimize its energy function result
+    Iterative process to compute a boundary and optimize its energy function output
     
     Args : 
         src_image (np.array) : Source Image
@@ -150,7 +147,6 @@ def compute_optimal_boundary(src_image, min_gradient_threshold=5, max_gradient_t
     
     Returns :
         np.array 1D optimal boundary
-    
     '''
         
     # Compute the gradient from the image
@@ -176,15 +172,14 @@ def compute_optimal_boundary(src_image, min_gradient_threshold=5, max_gradient_t
 
 def get_detected_sky_mask(src_image):
     '''
-    This methods takes an image, compute its optimal boundary and generate mask
-    with the sky delimitation from the rest
+    This methods takes an image, computes its optimal boundary and generates 
+    a mask with the sky delimitation from the rest
 
     Args :
         src_image (np.array) : source image
         
     Returns :
         np.array sky delimitation mask
-
     '''
 
     optimal_boundary = compute_optimal_boundary(src_image)
