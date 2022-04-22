@@ -174,7 +174,7 @@ def compute_optimal_boundary(src_image, min_gradient_threshold=5, max_gradient_t
 
     return optimal_boundary
 
-def get_sky_mask(src_image):
+def get_detected_sky_mask(src_image):
     '''
     This methods takes an image, compute its optimal boundary and generate mask
     with the sky delimitation from the rest
