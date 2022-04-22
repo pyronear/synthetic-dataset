@@ -1,6 +1,7 @@
 import cv2
 from utils import read_video
 from image_blending import basic_blending
+from randomization.sky_detection import get_detected_sky_mask
 import numpy as np
 import os
 import random
@@ -34,6 +35,7 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
     os.makedirs('dataset/img/', exist_ok=True)
     os.makedirs('dataset/mask/', exist_ok=True)
     os.makedirs('dataset/smoke/', exist_ok=True)
+    os.makedirs('dataset/sky_mask/', exist_ok=True)
 
     name = 'set_' + str(set_idx).zfill(3) + '_'
 
@@ -51,3 +53,8 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
             cv2.imwrite('dataset/img/' + name + str(i).zfill(4) + '.png', result)
             cv2.imwrite('dataset/mask/' + name + str(i).zfill(4) + '.jpg', mask*255)
             cv2.imwrite('dataset/smoke/' + name + str(i).zfill(4) + '.jpg', smoke)
+
+            # Sky Detection Mask
+            sky_mask = get_detected_sky_mask(img)
+            cv2.imwrite('dataset/sky_mask/' + name + str(i).zfill(4) + '.png', sky_mask)
+
