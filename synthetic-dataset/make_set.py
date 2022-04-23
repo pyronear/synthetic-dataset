@@ -10,14 +10,15 @@ BLENDING_METHODS = {
     'basic_blending' : basic_blending,
 }
 
-DATASET_BASE_PATH = 'dataset'
+DATASET_BASE_PATH = 'pyro_dataset'
 
 def save_img(folder_path, filename, img):
     os.makedirs(folder_path, exist_ok=True)
     cv2.imwrite(f'{folder_path}/{filename}', img)
 
-def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3, 
-                 fy=0.2, opacity=0.8, smoke_speed=5, smoke_offset=20):
+def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
+                 fy=0.2, opacity=0.8, smoke_speed=5, smoke_offset=20,
+                 train=True, get_mask=True, get_bbox=True):
 
     # Get smokes frames
     smoke_imgs = read_video(smoke_video_file)
@@ -51,13 +52,23 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
         dy = random.randint(0, hbg - hs - 1)
         dx = random.randint(0, wbg - ws - 1)
 
+        train_val = 'train' if train else 'val'
+
         for blending_type, blending_method in BLENDING_METHODS.items():
             
             print(f'Starting {blending_type} ...')
             
             for i, (img, smoke) in enumerate(zip(imgs, smoke_imgs)):
-                result, mask = blending_method(img, smoke, offset=(dy, dx))
-                
-                save_img(f'{DATASET_BASE_PATH}/{blending_type}/img', name + str(i).zfill(4) + '.png', result)
-                save_img(f'{DATASET_BASE_PATH}/{blending_type}/mask', name + str(i).zfill(4) + '.jpg', mask*255)
-                save_img(f'{DATASET_BASE_PATH}/{blending_type}/smoke', name + str(i).zfill(4) + '.jpg', smoke)
+                try:
+                    result, mask = blending_method(img, smoke, offset=(dy, dx))
+                    
+                    save_img(f'{DATASET_BASE_PATH}/images/{train_val}/', blending_type + '_' +
+                             name + str(i).zfill(4) + '.png', result)
+                    if get_bbox:
+                        save_img(f'{DATASET_BASE_PATH}/labels/{train_val}/', blending_type + '_' +
+                                 name + str(i).zfill(4) + '.png', result)
+                    if get_mask:
+                        save_img(f'{DATASET_BASE_PATH}/mask/{train_val}/', blending_type + '_' +
+                                 name + str(i).zfill(4) + '.jpg', mask*255)
+                except:
+                    pass
