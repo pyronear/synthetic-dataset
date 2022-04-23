@@ -1,5 +1,5 @@
 import cv2
-from utils import read_video
+from utils import read_video, save_img, save_label, get_label
 from image_blending import basic_blending
 import numpy as np
 import os
@@ -12,13 +12,11 @@ BLENDING_METHODS = {
 
 DATASET_BASE_PATH = 'pyro_dataset'
 
-def save_img(folder_path, filename, img):
-    os.makedirs(folder_path, exist_ok=True)
-    cv2.imwrite(f'{folder_path}/{filename}', img)
+
 
 def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
                  fy=0.2, opacity=0.8, smoke_speed=5, smoke_offset=20,
-                 train=True, get_mask=True, get_bbox=True):
+                 train=True, save_mask=False, save_bbox=False):
 
     # Get smokes frames
     smoke_imgs = read_video(smoke_video_file)
@@ -56,19 +54,18 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
 
         for blending_type, blending_method in BLENDING_METHODS.items():
             
-            print(f'Starting {blending_type} ...')
-            
             for i, (img, smoke) in enumerate(zip(imgs, smoke_imgs)):
-                try:
-                    result, mask = blending_method(img, smoke, offset=(dy, dx))
-                    
-                    save_img(f'{DATASET_BASE_PATH}/images/{train_val}/', blending_type + '_' +
-                             name + str(i).zfill(4) + '.png', result)
-                    if get_bbox:
-                        save_img(f'{DATASET_BASE_PATH}/labels/{train_val}/', blending_type + '_' +
-                                 name + str(i).zfill(4) + '.png', result)
-                    if get_mask:
-                        save_img(f'{DATASET_BASE_PATH}/mask/{train_val}/', blending_type + '_' +
-                                 name + str(i).zfill(4) + '.jpg', mask*255)
-                except:
-                    pass
+                
+                result, mask = blending_method(img, smoke, offset=(dy, dx))
+
+                label = get_label(mask*255)
+                
+                save_img(f'{DATASET_BASE_PATH}/images/{train_val}/', blending_type + '_' +
+                         name + str(i).zfill(4) + '.png', result)
+                if save_bbox:
+                    save_label(f'{DATASET_BASE_PATH}/labels/{train_val}/', blending_type + '_' +
+                               name + str(i).zfill(4) + '.txt', label)
+                if save_mask:
+                    save_img(f'{DATASET_BASE_PATH}/mask/{train_val}/', blending_type + '_' +
+                             name + str(i).zfill(4) + '.jpg', mask*255)
+
