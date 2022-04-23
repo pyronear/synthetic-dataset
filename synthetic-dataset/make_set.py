@@ -4,7 +4,17 @@ from image_blending import basic_blending, poisson_blending
 import numpy as np
 import os
 import random
+from functools import partial
 
+BLENDING_METHODS = {
+    'basic_blending' : basic_blending,
+}
+
+DATASET_BASE_PATH = 'dataset'
+
+def save_img(folder_path, filename, img):
+    os.makedirs(folder_path, exist_ok=True)
+    cv2.imwrite(f'{folder_path}/{filename}', img)
 
 def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3, 
                  fy=0.2, opacity=0.8, smoke_speed=5, smoke_offset=20):
@@ -31,10 +41,6 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
     # Read background
     imgs = read_video(background_file)
 
-    os.makedirs('dataset/img/', exist_ok=True)
-    os.makedirs('dataset/mask/', exist_ok=True)
-    os.makedirs('dataset/smoke/', exist_ok=True)
-
     name = 'set_' + str(set_idx).zfill(3) + '_'
 
     # Random offset
@@ -45,10 +51,13 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
         dy = random.randint(0, hbg - hs - 1)
         dx = random.randint(0, wbg - ws - 1)
 
-        for i, (img, smoke) in enumerate(zip(imgs, smoke_imgs)):
-            # result, mask = basic_blending(img, smoke, offset=(dy, dx))
-            result, mask = poisson_blending(img, smoke, offset=(dy, dx))
+        for blending_type, blending_method in BLENDING_METHODS.items():
             
-            cv2.imwrite('dataset/img/' + name + str(i).zfill(4) + '.png', result)
-            cv2.imwrite('dataset/mask/' + name + str(i).zfill(4) + '.jpg', mask*255)
-            cv2.imwrite('dataset/smoke/' + name + str(i).zfill(4) + '.jpg', smoke)
+            print(f'Starting {blending_type} ...')
+            
+            for i, (img, smoke) in enumerate(zip(imgs, smoke_imgs)):
+                result, mask = blending_method(img, smoke, offset=(dy, dx))
+                
+                save_img(f'{DATASET_BASE_PATH}/{blending_type}/img', name + str(i).zfill(4) + '.png', result)
+                save_img(f'{DATASET_BASE_PATH}/{blending_type}/mask', name + str(i).zfill(4) + '.jpg', mask*255)
+                save_img(f'{DATASET_BASE_PATH}/{blending_type}/smoke', name + str(i).zfill(4) + '.jpg', smoke)
