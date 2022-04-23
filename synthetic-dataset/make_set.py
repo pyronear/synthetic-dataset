@@ -2,6 +2,7 @@ import cv2
 from utils import read_video
 from image_blending import basic_blending
 from randomization.sky_detection import get_detected_sky_mask
+from randomization.randomization import get_random_start_point
 import numpy as np
 import os
 import random
@@ -39,13 +40,14 @@ def make_one_set(smoke_video_file, background_file, set_idx, fx=0.3,
 
     name = 'set_' + str(set_idx).zfill(3) + '_'
 
-    # Random offset
     hs, ws = smoke_imgs[0].shape[:2]
     hbg, wbg = imgs[0].shape[:2]
 
+    get_random_start_point(imgs[0])
+
     if hs < hbg and ws < wbg:
-        dy = random.randint(0, hbg - hs - 1)
-        dx = random.randint(0, wbg - ws - 1)
+
+        dx, dy = get_random_start_point(imgs[0])
 
         for i, (img, smoke) in enumerate(zip(imgs, smoke_imgs)):
             result, mask = basic_blending(img, smoke, offset=(dy, dx))
