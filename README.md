@@ -16,10 +16,10 @@ Finally you need to add videos of background and smoke in dedicated folders :
 
 ## Create dataset
 
-If you want to generate 3 set please use
+If you want to generate 10 set please use
 
 ```shell
-python synthetic-dataset\make_dataset.py --set 3
+python synthetic-dataset\make_dataset.py --set 10
 ```
 
 If you whant all possible combinaisons:
@@ -27,3 +27,20 @@ If you whant all possible combinaisons:
 ```shell
 python synthetic-dataset\make_dataset.py
 ```
+
+## Train smoke detection network
+
+We provide a notebook to train a smoke detection network using our synthetic dataset
+
+First add pyronear.yaml file to your dataset and then zip it:
+
+```shell
+cp pyronear.yaml pyro_dataset/pyronear.yaml
+zip -r pyro_dataset.zip pyro_dataset
+```
+
+Then store your dataset to your google drive
+
+Finally, use our notebook to train a yolov5 using your dataset
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1U1I6D6M47C3qPiZf7zo5lpbTXSjeGj6K?usp=sharing)
