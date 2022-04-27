@@ -1,11 +1,6 @@
 import cv2
-<<<<<<< HEAD
-from utils import read_video
-from image_blending import basic_blending, poisson_blending
-=======
 from utils import read_video, save_img, save_label, get_label
 from image_blending import basic_blending
->>>>>>> upstream/main
 import numpy as np
 import os
 import random
