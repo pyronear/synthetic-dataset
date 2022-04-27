@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from poisson_blending_utils import create_mask, poisson_blend
 
 
 def basic_blending(img, smoke, offset=(0, 0), opacity=0.8):
@@ -12,8 +13,10 @@ def basic_blending(img, smoke, offset=(0, 0), opacity=0.8):
         opacity (float, optional): smoke image opacity in [0, 1]. Defaults to (0, 0).
 
     Returns:
-        _type_: _description_
+        np.array: result image
+        np.array: result mask
     """
+
     ks = 7
     kernel = np.ones((ks, ks), np.float32)/(ks**2)
 
@@ -28,3 +31,32 @@ def basic_blending(img, smoke, offset=(0, 0), opacity=0.8):
     mask[dy:dy+smoke.shape[0], dx:dx+smoke.shape[1], :] = mask_dst
 
     return img, mask
+
+
+def poisson_blending(img, smoke, offset=(0, 0)):
+    """Add smoke on image using poisson image blending
+
+    Args:
+        img (np.array): background image
+        smoke (np.array): smoke image
+        offset (tuple, optional): smoke location offset (dy, dx). Defaults to (0, 0).
+
+    Returns:
+        np.array: result image
+        np.array: result mask
+    """
+
+    smoke_mask = smoke[:, :, 0] > 50
+    smoke_mask, smoke, offset_adj = create_mask(
+        smoke_mask, img, smoke, offset=offset
+    )
+
+    result = poisson_blend(
+            smoke_mask, smoke, img, method="normal", offset_adj=offset_adj
+        )
+
+    mask = img[:, :, 0]*0
+    dy, dx = offset
+    mask[dy:dy+smoke_mask.shape[0], dx:dx+smoke_mask.shape[1]] = smoke_mask
+
+    return result, mask

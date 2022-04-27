@@ -6,8 +6,10 @@ import os
 import random
 from functools import partial
 
+
 BLENDING_METHODS = {
-    'basic_blending' : basic_blending,
+    'basic_blending': basic_blending,
+    'poisson_blending': poisson_blending,
 }
 
 DATASET_BASE_PATH = 'pyro_dataset'
