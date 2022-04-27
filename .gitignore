@@ -109,5 +109,5 @@ conda-dist/
 
 # Videos
 videos
-dataset
+pyro_dataset/
 *.zip
