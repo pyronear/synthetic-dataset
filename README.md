@@ -16,7 +16,7 @@ Finally you need to add videos of background and smoke in dedicated folders :
 
 ## Create dataset
 
-If you want to generate 3 set please use
+If you want to generate 10 set please use
 
 ```shell
 python synthetic-dataset\make_dataset.py --set 10
