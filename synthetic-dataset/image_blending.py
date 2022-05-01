@@ -23,11 +23,11 @@ def basic_blending(img, smoke, offset=(0, 0), opacity=0.8):
     dy, dx = offset
     temp = img[dy:dy+smoke.shape[0], dx:dx+smoke.shape[1], :]
     dst = cv2.filter2D(smoke, -1, kernel)
-    mask_dst = dst > 50
+    mask_dst = dst[:, :, 0] > 50
     alpha = 1 - opacity * dst/np.max(dst)
     res = temp*alpha + smoke[:, :, ::-1]*(1-alpha)
     img[dy:dy+smoke.shape[0], dx:dx+smoke.shape[1], :] = res
-    mask = img * 0
+    mask = img[:, :, 0] * 0
     mask[dy:dy+smoke.shape[0], dx:dx+smoke.shape[1], :] = mask_dst
 
     return img, mask
