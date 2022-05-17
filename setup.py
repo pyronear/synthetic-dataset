@@ -118,7 +118,7 @@ setup(
     ],
     packages=find_packages(exclude=("test",)),
     zip_safe=True,
-    python_requires=">=3.8.0",
+    python_requires=">=3.7.0",
     include_package_data=True,
     install_requires=install_requires,
     extras_require=extras,
