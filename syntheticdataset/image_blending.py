@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from poisson_blending_utils import create_mask, poisson_blend
+from syntheticdataset.poisson_blending_utils import create_mask, poisson_blend
 
 
 def basic_blending(img, smoke, offset=(0, 0), opacity=0.8):

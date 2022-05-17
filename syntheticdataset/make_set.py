@@ -1,10 +1,8 @@
 import cv2
-from utils import read_video, save_img, save_label, get_label
-from image_blending import basic_blending
 import numpy as np
-import os
 import random
-from functools import partial
+from syntheticdataset.utils import read_video, save_img, save_label, get_label
+from syntheticdataset.image_blending import basic_blending, poisson_blending
 
 
 BLENDING_METHODS = {

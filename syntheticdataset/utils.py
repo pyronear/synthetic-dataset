@@ -31,7 +31,7 @@ def save_label(folder_path, filename, label):
 def get_label(mask):
     """Compute bounding box"""
     if np.sum(mask > 0) > 100:  # set minimum size (10x10 pixel on average)
-        mask = mask[:, :, 0]
+        mask = mask[:, :, 0] if len(mask.shape) > 2 else mask
         y0, x0 = np.min(np.where(mask), 1)
         y1, x1 = np.max(np.where(mask), 1)
         h, w = mask.shape
