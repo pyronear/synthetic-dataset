@@ -34,7 +34,7 @@ _deps = [
     "pandas>=0.25.2",
     "torch>=1.8.0",
     "torchvision>=0.9.0",
-    "scipy>=1.7.2"
+    "scipy>=1.7.2",
     # Testing
     "coverage>=4.5.4",
     # Quality
