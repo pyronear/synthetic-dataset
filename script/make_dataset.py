@@ -29,7 +29,8 @@ def main(args):
             make_one_set(
                 smoke_video_file,
                 background_file,
-                set_idx,
+                root="pyro_dataset",
+                set_idx=set_idx,
                 fx=fx,
                 fy=fy,
                 opacity=opacity,
@@ -56,7 +57,8 @@ def main(args):
                 make_one_set(
                     smoke_video_file,
                     background_file,
-                    set_idx,
+                    root="pyro_dataset",
+                    set_idx=set_idx,
                     fx=fx,
                     fy=fy,
                     opacity=opacity,

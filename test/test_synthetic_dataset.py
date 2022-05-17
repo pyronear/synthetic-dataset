@@ -6,6 +6,7 @@
 import unittest
 import random
 import tempfile
+import glob
 from syntheticdataset.make_set import make_one_set
 
 
@@ -24,6 +25,7 @@ class SyntheticDatasetTester(unittest.TestCase):
             make_one_set(
                 smoke_video_file,
                 background_file,
+                root=root + "pyro_dataset",
                 set_idx=0,
                 fx=fx,
                 fy=fy,
@@ -33,6 +35,10 @@ class SyntheticDatasetTester(unittest.TestCase):
                 save_mask=True,
                 save_bbox=True,
             )
+
+            self.assertGreater(len(glob.glob(root + "pyro_dataset/images/train/*")), 20)
+            self.assertGreater(len(glob.glob(root + "pyro_dataset/labels/train/*")), 20)
+            self.assertGreater(len(glob.glob(root + "pyro_dataset/mask/train/*")), 20)
 
 
 if __name__ == '__main__':

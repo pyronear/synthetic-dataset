@@ -10,13 +10,12 @@ BLENDING_METHODS = {
     "poisson_blending": poisson_blending,
 }
 
-DATASET_BASE_PATH = "pyro_dataset"
-
 
 def make_one_set(
     smoke_video_file,
     background_file,
-    set_idx,
+    root="pyro_dataset",
+    set_idx=0,
     fx=0.3,
     fy=0.2,
     opacity=0.8,
@@ -75,19 +74,19 @@ def make_one_set(
                 label = get_label(mask * 255)
 
                 save_img(
-                    f"{DATASET_BASE_PATH}/images/{train_val}/",
+                    f"{root}/images/{train_val}/",
                     blending_type + "_" + name + str(i).zfill(4) + ".png",
                     result,
                 )
                 if save_bbox:
                     save_label(
-                        f"{DATASET_BASE_PATH}/labels/{train_val}/",
+                        f"{root}/labels/{train_val}/",
                         blending_type + "_" + name + str(i).zfill(4) + ".txt",
                         label,
                     )
                 if save_mask:
                     save_img(
-                        f"{DATASET_BASE_PATH}/mask/{train_val}/",
+                        f"{root}/mask/{train_val}/",
                         blending_type + "_" + name + str(i).zfill(4) + ".jpg",
                         mask * 255,
                     )
