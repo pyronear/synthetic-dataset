@@ -2,12 +2,12 @@
 
 This is a temporary dataset to organize research on the change-detection project in data for good season 10. It will gather our ideas to create a synthetic change detection dataset and our solutions to detect them. The content of this repo will be shared between the pyro-vision and pyro-dataset repo when we have a stable solution
 
-## Requirements
+## Install Package
 
 
-You first need to install Python dependencies : 
+Install synthetic dataset package using:
 ```shell
-pip install -r requirements.txt
+pip install -e .
 ```
 
 Finally you need to add videos of background and smoke in dedicated folders :
@@ -19,13 +19,13 @@ Finally you need to add videos of background and smoke in dedicated folders :
 If you want to generate 10 set please use
 
 ```shell
-python synthetic-dataset\make_dataset.py --set 10
+python scripts/make_dataset.py --set 10
 ```
 
 If you whant all possible combinaisons:
 
 ```shell
-python synthetic-dataset\make_dataset.py
+python scripts/make_dataset.py
 ```
 
 ## Train smoke detection network
@@ -44,3 +44,17 @@ Then store your dataset to your google drive
 Finally, use our notebook to train a yolov5 using your dataset
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1U1I6D6M47C3qPiZf7zo5lpbTXSjeGj6K?usp=sharing)
+
+## Unitest
+
+You can run unitest using:
+
+```shell
+coverage run -m unittest discover test/
+```
+
+then check coverage using
+
+```shell
+coverage html
+```
