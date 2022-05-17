@@ -11,12 +11,11 @@ from syntheticdataset.make_set import make_one_set
 
 
 class SyntheticDatasetTester(unittest.TestCase):
-
     def test_synthetic_dataset(self):
         with tempfile.TemporaryDirectory() as root:
 
-            smoke_video_file = 'test/videos/test_smoke.mp4'
-            background_file = 'test/videos/test_bg.mp4'
+            smoke_video_file = "test/videos/test_smoke.mp4"
+            background_file = "test/videos/test_bg.mp4"
             fx = random.randint(1, 9) / 10  # random in [0.1, 0.9]
             fy = random.randint(1, 9) / 10  # random in [0.1, 0.9]
             opacity = random.randint(4, 10) / 10  # random in [0.4, 1.0]
@@ -41,5 +40,5 @@ class SyntheticDatasetTester(unittest.TestCase):
             self.assertGreater(len(glob.glob(root + "pyro_dataset/mask/train/*")), 20)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

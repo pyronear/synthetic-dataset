@@ -17,9 +17,9 @@ def read_video(file, size_max=1280):
         # Capture frame-by-frame
         ret, frame = cap.read()
         if ret:
-            r = size_max/max(frame.shape)
+            r = size_max / max(frame.shape)
             h, w = frame.shape[:2]
-            frame = cv2.resize(frame, (int(h*r), int(w*r)))
+            frame = cv2.resize(frame, (int(h * r), int(w * r)))
             imgs.append(frame)
 
     return imgs
