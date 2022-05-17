@@ -111,3 +111,6 @@ conda-dist/
 videos
 pyro_dataset/
 *.zip
+
+syntheticdataset/version.py
+
