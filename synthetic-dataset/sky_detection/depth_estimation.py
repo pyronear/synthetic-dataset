@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 
 
 # Depth Deep Learning Model
@@ -77,8 +78,8 @@ class DepthEstimation:
                 np.array: result mask image
         """
 
-        depth_image[depth_image < min_threshold] = 0
-        depth_image[depth_image > max_threshold] = 0
+        depth_image[np.logical_or(depth_image < min_threshold, depth_image > max_threshold)] = 0
+        depth_image[np.logical_and(depth_image >= min_threshold, depth_image <= max_threshold)] = 255
         return depth_image
 
     def detect_sky_from_depth(self, img, min_threshold = 60, max_threshold = 170):
