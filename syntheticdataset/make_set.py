@@ -25,10 +25,12 @@ def make_one_set(
     train=True,
     save_mask=False,
     save_bbox=False,
+    size_max_bg=1280,
+    size_max_smoke=1280,
 ):
 
     # Get smokes frames
-    smoke_imgs = read_video(smoke_video_file)
+    smoke_imgs = read_video(smoke_video_file, size_max=size_max_smoke)
 
     # Resize smokes frames
     smoke_imgs = [
@@ -50,7 +52,7 @@ def make_one_set(
     smoke_imgs = [smoke_img[y0:y1, x0:x1, :] for smoke_img in smoke_imgs]
 
     # Read background
-    imgs = read_video(background_file)
+    imgs = read_video(background_file, size_max=size_max_bg)
 
     name = "set_" + str(set_idx).zfill(3) + "_"
 
