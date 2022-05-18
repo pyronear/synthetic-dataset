@@ -1,12 +1,11 @@
-import numpy as np
-from skimage import data, io
-import scipy.sparse
-from scipy.sparse import coo_matrix
-import pyamg
-import matplotlib.pyplot as plt
+# Copyright (C) 2019-2022, Pyronear.
 
-import pdb
-import cv2
+# This program is licensed under the Apache License version 2.
+# See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0.txt> for full license details.
+
+import numpy as np
+import scipy.sparse
+import scipy.sparse.linalg
 
 
 def create_mask(img_mask, img_target, img_src, offset=(0, 0)):
