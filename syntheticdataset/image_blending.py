@@ -63,3 +63,22 @@ def poisson_blending(img, smoke, offset=(0, 0)):
     mask[dy : dy + smoke_mask.shape[0], dx : dx + smoke_mask.shape[1]] = smoke_mask
 
     return result, mask
+
+def seamless_clone_blending(img, smoke, offset=(0,0), clone_type = cv2.MIXED_CLONE):
+    """Add smoke on image using OpenCV with SeamlessClone method
+    
+    Args:
+        img (np.array): background image
+        smoke (np.array): smoke image
+        offset (tuple, optional): smoke location offset (dy, dx). Defaults to (0, 0).
+        clone_type (any): type of clone : NORMAL_CLONE, MIXED_CLONE, MONOCHROME_TRANSFER.
+
+    Returns:
+        _type_: _description_
+    """
+
+    mask = (( smoke > 0 ) * 255).astype('uint8')
+
+    blended_img = cv2.seamlessClone(smoke, img, mask, offset, clone_type)
+
+    return blended_img, mask
