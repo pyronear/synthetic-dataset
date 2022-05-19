@@ -8,6 +8,7 @@ import numpy as np
 import random
 from syntheticdataset.utils import read_video, save_img, save_label, get_label
 from syntheticdataset.image_blending import basic_blending, poisson_blending
+from syntheticdataset.randomization.randomization import get_random_start_point
 
 
 BLENDING_METHODS = {
@@ -65,8 +66,7 @@ def make_one_set(
     hbg, wbg = imgs[0].shape[:2]
 
     if hs < hbg and ws < wbg:
-        dy = random.randint(0, hbg - hs - 1)
-        dx = random.randint(0, wbg - ws - 1)
+        dx, dy = get_random_start_point(smoke_imgs[0])
 
         train_val = "train" if train else "val"
 
