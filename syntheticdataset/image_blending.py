@@ -33,7 +33,7 @@ def basic_blending(img, smoke, offset=(0, 0), opacity=0.8):
     res = temp * alpha + smoke[:, :, ::-1] * (1 - alpha)
     img[dy : dy + smoke.shape[0], dx : dx + smoke.shape[1], :] = res
     mask = img[:, :, 0] * 0
-    mask[dy : dy + smoke.shape[0], dx : dx + smoke.shape[1]] = mask_dst
+    mask[dy : dy + smoke.shape[0], dx : dx+ smoke.shape[1]] = mask_dst
 
     return img, mask
 
