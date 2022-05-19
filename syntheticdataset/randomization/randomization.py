@@ -3,7 +3,7 @@
 # This program is licensed under the Apache License version 2.
 # See LICENSE or go to <https://www.apache.org/licenses/LICENSE-2.0.txt> for full license details.
 
-from randomization.depth_estimation import detect_sky_from_depth
+from syntheticdataset.randomization.depth_estimation import detect_sky_from_depth
 import random
 import numpy as np
 
