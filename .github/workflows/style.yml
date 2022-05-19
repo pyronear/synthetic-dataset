@@ -1,0 +1,27 @@
+name: style
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  black:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python: [3.8]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+          architecture: x64
+      - name: Run black test
+        run: |
+          pip install black
+          black --version
+          black --check ./
