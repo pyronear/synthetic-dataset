@@ -69,7 +69,7 @@ def make_one_set(
     dx, dy = randomization.get_random_start_point(imgs[0])
 
     if hs < hbg and ws < wbg and dy > 0:
-    
+
         train_val = "train" if train else "val"
 
         for blending_type, blending_method in BLENDING_METHODS.items():

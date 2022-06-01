@@ -94,12 +94,12 @@ class DepthEstimation:
         """
 
         blobs_labels = measure.label(mask, background=0)
-        s = [np.sum(blobs_labels==l) for l in np.unique(blobs_labels)[1:]]
+        s = [np.sum(blobs_labels == l) for l in np.unique(blobs_labels)[1:]]
 
-        if(len(s) == 0):
+        if len(s) == 0:
             return mask
 
-        mask = blobs_labels==(np.where(s==np.max(s))[0] + 1)
+        mask = blobs_labels == (np.where(s == np.max(s))[0] + 1)
 
         return mask
 

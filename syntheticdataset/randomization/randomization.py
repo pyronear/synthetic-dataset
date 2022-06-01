@@ -7,6 +7,7 @@ from syntheticdataset.randomization.depth_estimation import DepthEstimation
 import random
 import numpy as np
 
+
 class Randomization:
     def __init__(self):
 
@@ -34,7 +35,7 @@ class Randomization:
         # Search for the max dy value not to be in the sky at the dx index
         max_dy = np.argmin(sky_mask[:, dx] == 0)
 
-        if(max_dy == 0 ):
+        if max_dy == 0:
             return dx, 0
 
         dy = random.randint(0, max_dy - 1)
