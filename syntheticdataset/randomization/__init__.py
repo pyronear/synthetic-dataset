@@ -5,3 +5,4 @@
 
 from .depth_estimation import *
 from .randomization import *
+from .version import __version__
