@@ -5,7 +5,7 @@
 
 import torch
 import numpy as np
-
+import skimage as sk
 
 # Depth Deep Learning Model
 MIDAS_LARGE = (
@@ -64,7 +64,6 @@ class DepthEstimation:
             np.array: result depth image
         """
 
-        print(img.shape)
         input = self.transform(img).to(self.device)
 
         with torch.no_grad():
@@ -79,6 +78,30 @@ class DepthEstimation:
         output = prediction.cpu().numpy()
 
         return self._scale_output(output)
+
+    def clean_mask_with_labelization(self, mask):
+        """
+        This method is cleaning the generated mask.
+        Some noise can on the image such as written text at the top corner.
+        Every different detected area will be split and the biggest one will be
+        kept and considered as sky.
+
+        Args:
+            masj (np.array): mask image
+
+        Returns:
+            np.array cleaned mask
+        """
+
+        blobs_labels = sk.measure.label(mask, background=0)
+        s = [np.sum(blobs_labels == l) for l in np.unique(blobs_labels)[1:]]
+
+        if len(s) == 0:
+            return mask
+
+        mask = blobs_labels == (np.where(s == np.max(s))[0] + 1)
+
+        return mask
 
     def generate_mask(self, depth_image, min_threshold, max_threshold):
         """
@@ -100,7 +123,8 @@ class DepthEstimation:
         depth_image[
             np.logical_and(depth_image >= min_threshold, depth_image <= max_threshold)
         ] = 255
-        return depth_image
+
+        return self.clean_mask_with_labelization(depth_image)
 
     def detect_sky_from_depth(self, img, min_threshold=60, max_threshold=170):
         """
