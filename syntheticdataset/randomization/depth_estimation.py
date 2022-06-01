@@ -5,7 +5,7 @@
 
 import torch
 import numpy as np
-from skimage import measure
+import skimage as sk
 
 # Depth Deep Learning Model
 MIDAS_LARGE = (
@@ -93,7 +93,7 @@ class DepthEstimation:
             np.array cleaned mask
         """
 
-        blobs_labels = measure.label(mask, background=0)
+        blobs_labels = sk.measure.label(mask, background=0)
         s = [np.sum(blobs_labels == l) for l in np.unique(blobs_labels)[1:]]
 
         if len(s) == 0:
