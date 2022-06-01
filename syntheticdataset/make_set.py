@@ -8,7 +8,7 @@ import numpy as np
 import random
 from syntheticdataset.utils import read_video, save_img, save_label, get_label
 from syntheticdataset.image_blending import basic_blending, poisson_blending
-from syntheticdataset.randomization.randomization import get_random_start_point
+from syntheticdataset.randomization.randomization import Randomization
 
 
 BLENDING_METHODS = {
@@ -33,6 +33,8 @@ def make_one_set(
     size_max_bg=1280,
     size_max_smoke=1280,
 ):
+
+    randomization = Randomization()
 
     # Get smokes frames
     smoke_imgs = read_video(smoke_video_file, size_max=size_max_smoke)
@@ -64,10 +66,10 @@ def make_one_set(
     # Random offset
     hs, ws = smoke_imgs[0].shape[:2]
     hbg, wbg = imgs[0].shape[:2]
+    dx, dy = randomization.get_random_start_point(imgs[0])
 
-    if hs < hbg and ws < wbg:
-        dx, dy = get_random_start_point(smoke_imgs[0])
-
+    if hs < hbg and ws < wbg and dy > 0:
+    
         train_val = "train" if train else "val"
 
         for blending_type, blending_method in BLENDING_METHODS.items():
